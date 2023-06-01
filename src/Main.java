@@ -9,32 +9,42 @@ import java.util.List;
 
 import java.util.Scanner;
 
+import static java.nio.file.Files.readAllLines;
+
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
+    private static ArrayList<Contact> contacts = new ArrayList<>();
     public static void main(String[] args) {
         menu();
 
 
-        //contact list
-        //TODO load this from file
-        ArrayList<Contact> contacts = new ArrayList<>();
-//        List<Contact> contacts = new ArrayList<>(List.of());
+        //this creates the contact list from the file
+        try {
+            getContactsFromList();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
-        //testing creating contacts, display, and adding to list
-        Contact testContact = addContact();
-        testContact.displayContacts();
-        contacts.add(testContact);
+        //test display contact list to see if it worked
         System.out.println(contacts);
 
 
-        //write to file
-        List<String> fileStrings = getFileStringsFromFighters(contacts);
+        //filepath
         Path filepath = Paths.get("contacts.txt");
-        try {
-            Files.write(filepath, fileStrings);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+
+        //write to file
+//        List<String> fileStrings = getFileStringsFromFighters(contacts);
+//        try {
+//            Files.write(filepath, fileStrings);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+
+
+
+
     }
 
 
@@ -50,7 +60,6 @@ public class Main {
 
         int userOption = scanner.nextInt();
         userSelection(userOption);
-
 
     }
 
@@ -70,10 +79,13 @@ public class Main {
 
 
     public static void view() {
+
         String listHeader = "Name | Phone number\n"
                             + "--------------------\n";
         System.out.println(listHeader);
 
+
+        System.out.println("view");
         menu();
     }
 
@@ -113,7 +125,7 @@ public class Main {
         return contactStrings;
     }
 
-    public static Contact addContact() {
+    public static void addContact() {
         //TODO check that there isn't already a contact with this name
         //TODO phone number validation
         System.out.println("What is the name of your contact?");
@@ -122,7 +134,26 @@ public class Main {
         //TODO wrap string to int conversion in try/catch
         int numberInput = Integer.parseInt(scanner.nextLine());
 
-        return new Contact(nameInput, numberInput);
+        contacts.add(new Contact(nameInput, numberInput));
+    }
+
+    public static List<String> getFileList() throws IOException {
+        Path filepath = Paths.get("contacts.txt");
+        //read from file
+        List<String> contactList = Files.readAllLines(filepath);
+        System.out.println(contactList);
+        return contactList;
+    }
+
+    public static void getContactsFromList() throws IOException {
+        List<String> contactList = getFileList();
+        for(String contact : contactList) {
+            String[] contactSplit = contact.split(",");
+            //TODO wrap conversion
+            long number = Long.parseLong(contactSplit[1]);
+            Contact newContact = new Contact(contactSplit[0], number);
+            contacts.add(newContact);
+        }
     }
 
 }
