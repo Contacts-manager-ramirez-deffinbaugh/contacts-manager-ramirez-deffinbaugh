@@ -1,4 +1,10 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -8,6 +14,7 @@ public class Main {
         //contact list
         //TODO load this from file
         ArrayList<Contact> contacts = new ArrayList<>();
+//        List<Contact> contacts = new ArrayList<>(List.of());
 
         //testing creating contacts, display, and adding to list
         Contact testContact = addContact();
@@ -16,6 +23,33 @@ public class Main {
         System.out.println(contacts);
 
 
+        //write to file
+        List<String> fileStrings = getFileStringsFromFighters(contacts);
+        Path filepath = Paths.get("contacts.txt");
+        try {
+            Files.write(filepath, fileStrings);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private static List<String> getFileStringsFromFighters(List<Contact> contacts) {
+        // 0. make a new empty list of strings
+        List<String> contactStrings = new ArrayList<>();
+
+        // 1. for each fighter
+        for (Contact contact : contacts) {
+            // 2. get the string version of the fighter
+            String contactString = contact.toCSV();
+
+            // 3. add that string to a list of strings
+            contactStrings.add(contactString);
+        }
+
+        // 4. return the list of strings
+        return contactStrings;
     }
 
     public static Contact addContact() {
