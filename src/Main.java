@@ -15,6 +15,8 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static ArrayList<Contact> contacts = new ArrayList<>();
     public static void main(String[] args) {
+
+
         //this creates the contact list from the file
         try {
             getContactsFromList();
@@ -23,6 +25,7 @@ public class Main {
         }
 
         menu();
+
     }
 
 
@@ -61,13 +64,15 @@ public class Main {
     public static void view() {
 
         String listHeader = "Name | Phone number\n"
-                            + "--------------------\n";
+                        + "--------------------";
         System.out.println(listHeader);
-
-
-        System.out.println("view");
+        for (Contact contact : contacts) {
+                contact.displayContacts();
+        }
+        System.out.println(" ");
         menu();
     }
+
 
     public static void  add() {
         System.out.println("What is the name of your contact?");
@@ -79,6 +84,7 @@ public class Main {
         int numberInput = Integer.parseInt(scanner.nextLine());
 
         contacts.add(new Contact(nameInput, numberInput));
+
         menu();
     }
 
