@@ -15,8 +15,6 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static ArrayList<Contact> contacts = new ArrayList<>();
     public static void main(String[] args) {
-        menu();
-
 
         //this creates the contact list from the file
         try {
@@ -25,8 +23,9 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        menu();
         //test display contact list to see if it worked
-        System.out.println(contacts);
+//        System.out.println(contacts);
 
 
         //filepath
@@ -59,6 +58,7 @@ public class Main {
         System.out.println(options);
 
         int userOption = scanner.nextInt();
+        scanner.nextLine();
         userSelection(userOption);
 
     }
@@ -81,15 +81,17 @@ public class Main {
     public static void view() {
 
         String listHeader = "Name | Phone number\n"
-                            + "--------------------\n";
+                        + "--------------------";
         System.out.println(listHeader);
-
-
-        System.out.println("view");
+        for (Contact contact : contacts) {
+                contact.displayContacts();
+        }
+        System.out.println(" ");
         menu();
     }
 
-    public static void  add() {
+
+    public static void add() {
         System.out.println("add");
         menu();
     }
