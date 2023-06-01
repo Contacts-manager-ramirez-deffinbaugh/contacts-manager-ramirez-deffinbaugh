@@ -16,6 +16,7 @@ public class Main {
     private static ArrayList<Contact> contacts = new ArrayList<>();
     public static void main(String[] args) {
 
+
         //this creates the contact list from the file
         try {
             getContactsFromList();
@@ -24,27 +25,9 @@ public class Main {
         }
 
         menu();
-        //test display contact list to see if it worked
-//        System.out.println(contacts);
-
-
-        //filepath
-        Path filepath = Paths.get("contacts.txt");
-
-
-        //write to file
-//        List<String> fileStrings = getFileStringsFromFighters(contacts);
-//        try {
-//            Files.write(filepath, fileStrings);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-
-
-
 
     }
+
 
 
     public static void menu() {
@@ -91,26 +74,72 @@ public class Main {
     }
 
 
-    public static void add() {
-        System.out.println("add");
+    public static void  add() {
+        System.out.println("What is the name of your contact?");
+        String nameInput = scanner.nextLine();
+        contactExists(nameInput);
+
+        System.out.println("What is their phone number?");
+        //creat a number function
+        int numberInput = Integer.parseInt(scanner.nextLine());
+
+        contacts.add(new Contact(nameInput, numberInput));
+
         menu();
     }
 
+    public static void contactExists(String nameInput) {
+        for(Contact contact : contacts) {
+            if(contact.getName().equals(nameInput)) {
+                System.out.println("\nSorry there is already a contact by the name. ");
+                menu();
+            }
+        }
+    }
+
     public static void search() {
-        System.out.println("search");
+        System.out.println("Enter the name of the contact you are looking for: ");
+        String contactName = scanner.nextLine();
+        boolean found = false;
+        for(Contact contact : contacts) {
+            if( contact.getName().equals(contactName)) {
+                contact.displayContacts();
+                found = true;
+            }
+        }
+        if(!found) {
+            System.out.println("Sorry, there are no contacts by that name.");
+        }
         menu();
     }
 
     public static void delete() {
-        System.out.println("delete");
+        System.out.println("Enter the name of the contact you would like to delete: ");
+        String contactName = scanner.nextLine();
+        boolean found = false;
+        for(Contact contact : contacts) {
+            if( contact.getName().equals(contactName)) {
+                contacts.remove(contact);
+                System.out.println("Contact \""+ contactName + "\" was deleted successfully");
+                found = true;
+            }
+        }
+        if(!found) {
+            System.out.println("Sorry, there are no contacts by that name.");
+        }
         menu();
     }
 
     public static void exit() {
-        System.out.println("exit");
+        try {
+            saveContactList();
+            System.out.println("Thank you for using our contact manager. Goodbye!");
+        } catch (IOException e) {
+            System.out.println("Contacts were unable to save. You now have no contacts. Wha Wha Wha");
+        }
     }
 
-    private static List<String> getFileStringsFromFighters(List<Contact> contacts) {
+    private static List<String> getFileStringsFromContacts(List<Contact> contacts) {
         // 0. make a new empty list of strings
         List<String> contactStrings = new ArrayList<>();
 
@@ -125,18 +154,6 @@ public class Main {
 
         // 4. return the list of strings
         return contactStrings;
-    }
-
-    public static void addContact() {
-        //TODO check that there isn't already a contact with this name
-        //TODO phone number validation
-        System.out.println("What is the name of your contact?");
-        String nameInput = scanner.nextLine();
-        System.out.println("What is their phone number?");
-        //TODO wrap string to int conversion in try/catch
-        int numberInput = Integer.parseInt(scanner.nextLine());
-
-        contacts.add(new Contact(nameInput, numberInput));
     }
 
     public static List<String> getFileList() throws IOException {
@@ -156,6 +173,14 @@ public class Main {
             Contact newContact = new Contact(contactSplit[0], number);
             contacts.add(newContact);
         }
+    }
+
+    public static void saveContactList() throws IOException {
+        Path filepath = Paths.get("contacts.txt");
+        //write to file
+        List<String> fileStrings = getFileStringsFromContacts(contacts);
+        Files.write(filepath, fileStrings);
+
     }
 
 }
