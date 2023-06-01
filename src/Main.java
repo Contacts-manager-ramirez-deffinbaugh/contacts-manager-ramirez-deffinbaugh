@@ -57,6 +57,9 @@ public class Main {
                 delete();
             } else if (x == 5) {
                 exit();
+            } else {
+                System.out.println("Invalid Entry\n");
+                menu();
             }
     }
 
