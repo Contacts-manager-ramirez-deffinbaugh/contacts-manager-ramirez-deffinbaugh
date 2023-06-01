@@ -94,7 +94,8 @@ public class Main {
     public static void contactExists(String nameInput) {
         for(Contact contact : contacts) {
             if(contact.getName().equals(nameInput)) {
-                System.out.println("\nSorry there is already a contact by the name. ");
+                System.out.println("\nThere is already a contact named " + nameInput +".");
+                System.out.println("Would you like to overwrite it? (Yes/No)");
                 menu();
             }
         }
@@ -120,9 +121,9 @@ public class Main {
         System.out.println("Enter the name of the contact you would like to delete: ");
         String contactName = scanner.nextLine();
         boolean found = false;
-        for(Contact contact : contacts) {
-            if( contact.getName().equals(contactName)) {
-                contacts.remove(contact);
+        for(int i = 0; i < contacts.size(); i++) {
+            if( contacts.get(i).getName().equals(contactName)) {
+                contacts.remove(contacts.get(i));
                 System.out.println("Contact \""+ contactName + "\" was deleted successfully");
                 found = true;
             }
