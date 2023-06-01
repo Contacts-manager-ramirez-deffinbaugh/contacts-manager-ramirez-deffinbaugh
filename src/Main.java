@@ -29,21 +29,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int userOption = scanner.nextInt();
         userSelection(userOption);
-    }
 
-    public static void userSelection(int x) {
-        if (x == 1) {
-            view();
-        } else if (x == 2) {
-            add();
-        } else if (x == 3) {
-            search();
-        } else if (x == 4) {
-            delete();
-        } else if (x == 5) {
-            exit();
-        }
-    }
 
 
         //contact list
@@ -66,8 +52,46 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void userSelection(int x) {
+        if (x == 1) {
+            view();
+        } else if (x == 2) {
+            add();
+        } else if (x == 3) {
+            search();
+        } else if (x == 4) {
+            delete();
+        } else if (x == 5) {
+            exit();
+        }
+    }
 
 
+    public static void view() {
+        System.out.println("view");
+        menu();
+
+    }
+
+    public static void  add() {
+        System.out.println("add");
+        menu();
+    }
+
+    public static void search() {
+        System.out.println("search");
+        menu();
+    }
+
+    public static void delete() {
+        System.out.println("delete");
+        menu();
+    }
+
+    public static void exit() {
+        System.out.println("exit");
     }
 
     private static List<String> getFileStringsFromFighters(List<Contact> contacts) {
@@ -97,30 +121,6 @@ public class Main {
         int numberInput = Integer.parseInt(in.nextLine());
 
         return new Contact(nameInput, numberInput);
-
-    public static void view() {
-        System.out.println("view");
-        menu();
-
-    }
-
-    public static void  add() {
-        System.out.println("add");
-        menu();
-    }
-
-    public static void search() {
-        System.out.println("search");
-        menu();
-    }
-
-    public static void delete() {
-        System.out.println("delete");
-        menu();
-    }
-
-    public static void exit() {
-        System.out.println("exit");
     }
 
 }
