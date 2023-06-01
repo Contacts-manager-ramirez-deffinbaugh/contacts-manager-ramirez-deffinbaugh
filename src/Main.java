@@ -10,26 +10,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    private static Scanner in = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
         menu();
-
-    }
-
-    public static void menu() {
-
-        String options = "1. View contacts.\n"
-                + "2. Add a new contact.\n"
-                + "3. Search a contact by name.\n"
-                + "4. Delete an existing contact.\n"
-                + "5. Exit.\n"
-                + "Enter an option (1, 2, 3, 4 or 5):";
-        System.out.println(options);
-
-        Scanner scanner = new Scanner(System.in);
-        int userOption = scanner.nextInt();
-        userSelection(userOption);
-
 
 
         //contact list
@@ -52,6 +35,23 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public static void menu() {
+
+        String options = "1. View contacts.\n"
+                + "2. Add a new contact.\n"
+                + "3. Search a contact by name.\n"
+                + "4. Delete an existing contact.\n"
+                + "5. Exit.\n"
+                + "Enter an option (1, 2, 3, 4 or 5):";
+        System.out.println(options);
+
+        int userOption = scanner.nextInt();
+        userSelection(userOption);
+
+
     }
 
     public static void userSelection(int x) {
@@ -115,10 +115,10 @@ public class Main {
         //TODO check that there isn't already a contact with this name
         //TODO phone number validation
         System.out.println("What is the name of your contact?");
-        String nameInput = in.nextLine();
+        String nameInput = scanner.nextLine();
         System.out.println("What is their phone number?");
         //TODO wrap string to int conversion in try/catch
-        int numberInput = Integer.parseInt(in.nextLine());
+        int numberInput = Integer.parseInt(scanner.nextLine());
 
         return new Contact(nameInput, numberInput);
     }
