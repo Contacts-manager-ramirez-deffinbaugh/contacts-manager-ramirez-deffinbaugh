@@ -55,24 +55,26 @@ public class Main {
     }
 
     public static void userSelection(int x) {
-        if (x == 1) {
-            view();
-        } else if (x == 2) {
-            add();
-        } else if (x == 3) {
-            search();
-        } else if (x == 4) {
-            delete();
-        } else if (x == 5) {
-            exit();
-        }
+            if (x == 1) {
+                view();
+            } else if (x == 2) {
+                add();
+            } else if (x == 3) {
+                search();
+            } else if (x == 4) {
+                delete();
+            } else if (x == 5) {
+                exit();
+            }
     }
 
 
     public static void view() {
-        System.out.println("view");
-        menu();
+        String listHeader = "Name | Phone number\n"
+                            + "--------------------\n";
+        System.out.println(listHeader);
 
+        menu();
     }
 
     public static void  add() {
