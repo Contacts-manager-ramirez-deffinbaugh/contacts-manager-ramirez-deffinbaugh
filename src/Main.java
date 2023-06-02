@@ -79,11 +79,8 @@ public class Main {
 
         if (!contactExists) {
             System.out.println("What is their phone number?");
-            //creat a number function
             long numberInput = getPhoneNumber();
-
             contacts.add(new Contact(nameInput, numberInput));
-
             System.out.println("Contact \"" + nameInput + "\" created successfully\n");
         }
 
@@ -105,21 +102,24 @@ public class Main {
         for (int i = 0; i < contacts.size(); i++) {
             if (contacts.get(i).getName().equals(nameInput)) {
                 exists = true;
-                System.out.println("\nThere is already a contact named " + nameInput + ".");
-                System.out.println("Would you like to overwrite it? (Type \"yes\" to continue)");
-                String userIn = scanner.nextLine();
-                if (userIn.equalsIgnoreCase("yes")) {
-                    System.out.println("What is their phone number?");
-                    //creat a number function
-                    long numberInput = getPhoneNumber();
-                    contacts.set(i, new Contact(nameInput, numberInput));
-                    System.out.println("Contact \"" + nameInput + "\" updated successfully\n");
-                } else {
-                    System.out.println("Contact overwrite canceled.\n");
-                }
+                handleExists(i,nameInput);
             }
         }
         return exists;
+    }
+
+    public static void handleExists(int i, String nameInput){
+        System.out.println("\nThere is already a contact named " + nameInput + ".");
+        System.out.println("Would you like to overwrite it? (Type \"yes\" to continue)");
+        String userIn = scanner.nextLine();
+        if (userIn.equalsIgnoreCase("yes")) {
+            System.out.println("What is their phone number?");
+            long numberInput = getPhoneNumber();
+            contacts.set(i, new Contact(nameInput, numberInput));
+            System.out.println("Contact \"" + nameInput + "\" updated successfully\n");
+        } else {
+            System.out.println("Contact overwrite canceled.\n");
+        }
     }
 
     public static void search() {
@@ -128,12 +128,7 @@ public class Main {
         boolean found = false;
         for (Contact contact : contacts) {
             if (contact.getName().equals(contactName)) {
-                System.out.println("Result:");
-                String listHeader = "Name                |  Phone number\n"
-                        + "----------------------------------------";
-                System.out.println(listHeader);
-                contact.displayContacts();
-                System.out.println();
+                printSingleContact(contact);
                 found = true;
             }
         }
@@ -141,6 +136,15 @@ public class Main {
             System.out.println("Sorry, there are no contacts by that name.");
         }
         menu();
+    }
+
+    public static void printSingleContact(Contact contact) {
+        System.out.println("Result:");
+        String listHeader = "Name                |  Phone number\n"
+                + "----------------------------------------";
+        System.out.println(listHeader);
+        contact.displayContacts();
+        System.out.println();
     }
 
     public static void delete() {
@@ -201,19 +205,13 @@ public class Main {
     }
 
     private static List<String> getFileStringsFromContacts(List<Contact> contacts) {
-        // 0. make a new empty list of strings
         List<String> contactStrings = new ArrayList<>();
 
-        // 1. for each fighter
         for (Contact contact : contacts) {
-            // 2. get the string version of the fighter
             String contactString = contact.toCSV();
-
-            // 3. add that string to a list of strings
             contactStrings.add(contactString);
         }
 
-        // 4. return the list of strings
         return contactStrings;
     }
 
@@ -229,7 +227,6 @@ public class Main {
         List<String> contactList = getFileList();
         for (String contact : contactList) {
             String[] contactSplit = contact.split(",");
-            //TODO wrap conversion
             long number = Long.parseLong(contactSplit[1]);
             Contact newContact = new Contact(contactSplit[0], number);
             contacts.add(newContact);
