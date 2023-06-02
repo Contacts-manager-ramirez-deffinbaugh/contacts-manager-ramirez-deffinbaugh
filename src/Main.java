@@ -100,7 +100,7 @@ public class Main {
     public static boolean contactExists(String nameInput) {
         boolean exists = false;
         for (int i = 0; i < contacts.size(); i++) {
-            if (contacts.get(i).getName().equals(nameInput)) {
+            if (contacts.get(i).getName().equalsIgnoreCase(nameInput)) {
                 exists = true;
                 handleExists(i,nameInput);
             }
@@ -127,7 +127,7 @@ public class Main {
         String contactName = scanner.nextLine();
         boolean found = false;
         for (Contact contact : contacts) {
-            if (contact.getName().equals(contactName)) {
+            if (contact.getName().equalsIgnoreCase(contactName)) {
                 printSingleContact(contact);
                 found = true;
             }
@@ -152,7 +152,7 @@ public class Main {
         String contactName = scanner.nextLine();
         boolean found = false;
         for (int i = 0; i < contacts.size(); i++) {
-            if (contacts.get(i).getName().equals(contactName)) {
+            if (contacts.get(i).getName().equalsIgnoreCase(contactName)) {
                 contacts.remove(contacts.get(i));
                 System.out.println("Contact \"" + contactName + "\" was deleted successfully\n");
                 found = true;
