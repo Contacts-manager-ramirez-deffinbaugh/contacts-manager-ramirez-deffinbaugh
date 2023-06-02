@@ -10,7 +10,17 @@ public class Contact {
 
     public void displayContacts() {
         //TODO format this
-        System.out.println(name + " | " + phoneNumber);
+        System.out.printf("%-20s|  %s\n",name,phoneNumberDisplay());
+    }
+
+    public String phoneNumberDisplay(){
+        String numberToString = String.valueOf(phoneNumber);
+        if(numberToString.length() == 7) {
+            numberToString = numberToString.substring(0, 3) + "-" + numberToString.substring(3);
+        } else if(numberToString.length() == 10) {
+            numberToString = "("+numberToString.substring(0, 3) + ") " + numberToString.substring(3,6)+ "-" + numberToString.substring(6);
+        }
+        return numberToString;
     }
 
     public String toCSV() {
